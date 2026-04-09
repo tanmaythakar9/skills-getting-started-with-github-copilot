@@ -88,6 +88,15 @@ def get_activities():
     return activities
 
 
+@app.get("/students")
+def get_students():
+    """Get a list of all unique students signed up for activities"""
+    students = set()
+    for activity in activities.values():
+        students.update(activity["participants"])
+    return {"students": sorted(list(students))}
+
+
 @app.post("/activities/{activity_name}/signup")
 def signup_for_activity(activity_name: str, email: str):
     """Sign up a student for an activity"""
